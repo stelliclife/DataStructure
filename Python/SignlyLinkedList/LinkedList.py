@@ -27,59 +27,49 @@ class LinkedList:
             self._head = node
         else:
             current_node = self._head
-            while current_node:
-                if not current_node.next:
-                    current_node.next = node
-                    break
+            while current_node.next:
                 current_node = current_node.next
+            current_node.next = node
 
     def add_node_to_start(self, value):
         node = Node(value)
         node.next = self._head
         self._head = node
 
-    def insert_node_after(self, target, value):
+    def insert_node(self, target, value):
         node = Node(value)
         current_node = self._head
 
-        while current_node:
-            if current_node.data == target:
-                node.next = current_node.next
-                current_node.next = node
-                break
+        while current_node.data != target:
             current_node = current_node.next
+        node.next = current_node.next
+        current_node.next = node
 
     def delete_node_at_end(self):
+        if not (self._head and self._head.next):
+            return self._head
+
         current_node = self._head
         next_node = current_node.next
 
-        if not (current_node or next_node):
-            return current_node
-
-        while next_node:
-            if not next_node.next:
-                current_node.next = None
-                break
+        while next_node.next:
             current_node = next_node
             next_node = next_node.next
+        current_node.next = None
 
         return next_node
 
     def delete_node_at_start(self):
-        current_node = self._head
         self._head = self._head.next
 
-        return current_node
+        return self._head
 
     def delete_node_after(self, value):
         current_node = self._head
-        target_node = None
 
-        while current_node:
-            if current_node.data == value and current_node.next is not None:
-                target_node = current_node.next
-                current_node.next = target_node.next
-                break
+        while current_node.data != value or current_node.next is None:
             current_node = current_node.next
+        target_node = current_node.next
+        current_node.next = target_node.next
 
         return target_node
