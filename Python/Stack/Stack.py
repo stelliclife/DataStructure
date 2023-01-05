@@ -1,18 +1,20 @@
 class StackArray:
     def __init__(self):
         self._size = 0
-        self._array = []
+        self._array = [0]
         self._top = -1
 
     def push(self, value):
         if self.is_full():
             self.resize()
+        self._top += 1
         self._array[self._top] = value
         self._size += 1
 
     def pop(self):
         if not self.is_empty():
             target = self.peek()
+            self._array.pop(self._top)
             self._top -= 1
             self._size -= 1
             return target
@@ -61,4 +63,33 @@ class Node:
 
 class StackLinkedList:
     def __init__(self):
-        self._head = None
+        self._top = None
+        self._size = 0
+
+    def push(self, value):
+        node = Node(value)
+
+        node.next = self._top
+        self._top = node
+        self._size += 1
+
+    def pop(self):
+        if self.is_empty():
+            return None
+
+        target = self._top
+        self._top = self._top.next
+        target.next = None
+        self._size -= 1
+
+        return target
+
+    def peek(self):
+        if not self._top:
+            return None
+        return self._top.data
+
+    def is_empty(self):
+        if self._size:
+            return False
+        return True
