@@ -27,6 +27,11 @@ class Node:
 class BinarySearchTree:
     def __init__(self):
         self._root = None
+        self._traversal = []
+
+    @property
+    def traversal(self):
+        return self._traversal
 
     def find_minimum_number(self, node=None):
         if not node:
@@ -83,3 +88,42 @@ class BinarySearchTree:
                 self.insert(value, current_node.right)
             else:
                 current_node.right = Node(value)
+
+    def preorder(self, node=None):
+        if not node and self._root:
+            self._traversal = []
+            current_node = self._root
+        else:
+            current_node = node
+
+        self._traversal.append(current_node)
+        if current_node.left:
+            self.preorder(current_node.left)
+        if current_node.right:
+            self.preorder(current_node.right)
+
+    def inorder(self, node=None):
+        if not node and self._root:
+            self._traversal = []
+            current_node = self._root
+        else:
+            current_node = node
+
+        if current_node.left:
+            self.inorder(current_node.left)
+        self._traversal.append(current_node)
+        if current_node.right:
+            self.inorder(current_node.right)
+
+    def postorder(self, node=None):
+        if not node and self._root:
+            self._traversal = []
+            current_node = self._root
+        else:
+            current_node = node
+
+        if current_node.left:
+            self.postorder(current_node.left)
+        if current_node.right:
+            self.postorder(current_node.right)
+        self._traversal.append(current_node)
