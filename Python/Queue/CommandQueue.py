@@ -21,7 +21,7 @@ class PriorityQueue:
         Enqueue a new command into a queue
 
         Argument:
-            data: dict
+            process: dict
         """
         self._array.append(process)
         self._result.append(-1)
@@ -46,7 +46,7 @@ class PriorityQueue:
         Dequeue a specific command from a queue
 
         Argument:
-            command:
+            command: string
         Return: None/dict
         """
         if self.is_empty():
